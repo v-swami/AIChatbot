@@ -1,0 +1,51 @@
+<!-- #CSE4022 - J COMPONENT
+#TITLE: IMPLEMETING A CHATBOT USING RNN AND SEQ2SEQ MODELING
+#MADE BY: Swami Venkat (16BCE2270) -->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>Seq2Seq Chatbot</h1>
+    <h3>CSE4022 - Nautral Langauge Processing - C1</h3>
+    <h3></h3>
+    <h3>DEVELOPED BY: SHARVIL MALIK (16BCE2100) </h3>
+    <h3>J - Component Final Review (Review #3)</h3>
+    <div>
+      <div id="chatbox">
+        <p class="botText"><span>Hi! I'm Norman, the NLP Chatbot.</span></p>
+      </div>
+      <div id="userInput">
+        <input id="textInput" type="text" name="msg" placeholder="Message">
+        <input id="buttonInput" type="submit" value="Send">
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+            $("#chatbox").append(botHtml);
+            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          });
+        }
+        $("#textInput").keypress(function(e) {
+            if(e.which == 13) {
+                getBotResponse();
+            }
+        });
+        $("#buttonInput").click(function() {
+          getBotResponse();
+        })
+      </script>
+    </div>
+  </body>
+</html>
+
